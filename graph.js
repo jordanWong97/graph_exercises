@@ -99,36 +99,76 @@ class Graph {
   }
 
   /** find the distance of the shortest path from the start vertex to the end vertex */
-  distanceOfShortestPath(start, end) {
-    let minimum = Infinity;
-    let count = 0;
+  distanceOfShortestPath(start, end, adjacentList=[]) {
     let toVisit = [start];
-    let visited = new Set([start]);
-    let visitedInLoop = new Set();
-    //visited paths array [[qrtwy]]
-    //
-    while (toVisit.length !== 0) {
-      let current = toVisit.pop();
-      if (current === end) {
-        if (count < minimum) {
-          minimum = count;
-        } else {
-          count = 0;
-        }
+    let visited = new Set();
+
+    if (start === end) return count;
+    while (true) {
+      // let current = toVisit.shift();
+      visited.add(current);
+
+
+      for (let node of start.adjacent) {
+        adjacentList.push(node);
       }
+
+      if (adjacentList.includes(end)) return count;
       else {
-        for (let node of current.adjacent) {
-          if (!visited.has(node)) {
-            toVisit.push(node);
-          }
-        }
-
+        for (let adj of adjacentList)
       }
-      count++;
-    }
+      [{1,2},{2,3}]
+      [1,2,2,3]
+    return nodeVals;
 
-    return minimum;
+
+
   }
 }
+// let minimum = Infinity;
+// function _recursiveDistance(start, end, minimum, visited=new Set([]), count=0) {
+//   if (start === end) return count;
+//   if (start.adjacent.has(end)) return count + 1;
 
+//   visited.add(start);
+
+//   for (let node of start.adjacent) {
+//     if (!visited.has(node)) {
+//       this._recursiveDistance(node, end, minimum)
+//     }
+//   }
+// }
+
+// _recursiveDistance(start, end, minimum)
+
+// let minimum = Infinity;
+// let count = 0; // 4
+// let toVisit = [start]; // T, H, M
+// let visited = new Set([start]); // R, I, T, H
+// let visitedInLoop = new Set();
+// //visited paths array ['rithm', 'rthm', 'rhm']
+// //
+// while (toVisit.length !== 0) {
+//   let current = toVisit.pop();
+//   if (current === end) {
+//     if (count < minimum) {
+//       minimum = count;
+//     } else {
+//       count = 0;
+//     }
+//   }
+//   else {
+//     for (let node of current.adjacent) {
+//       if (!visited.has(node)) {
+//         toVisit.push(node);
+//         // what if there are duplicates in toVisit?
+//       }
+//     }
+
+//   }
+//   count++;
+//   visited.add(current);
+// }
+
+// return Math.min(this.distanceOfShortestPath(start, end));
 module.exports = { Graph, Node };
