@@ -99,29 +99,40 @@ class Graph {
   }
 
   /** find the distance of the shortest path from the start vertex to the end vertex */
-  distanceOfShortestPath(start, end, adjacentList=[]) {
-    let toVisit = [start];
-    let visited = new Set();
+  distanceOfShortestPath(start, end, adjacentList = new Set(), count, visited = new Set()) {
 
     if (start === end) return count;
-    while (true) {
-      // let current = toVisit.shift();
-      visited.add(current);
 
+    if (adjacentList.has(end)) {
+      count++;
+      return count;
+    }
 
-      for (let node of start.adjacent) {
-        adjacentList.push(node);
+    while (adjacentList) {
+
+      if (adjacentList.length === 0) {
+        for (let single of start.adjacent) {
+          adjacentList.add(single);
+        }
       }
 
-      if (adjacentList.includes(end)) return count;
-      else {
-        for (let adj of adjacentList)
+      count++;
+
+      let newSet = new Set();
+
+      for (let node of adjacentList) {
+        if (node.val !== end) {
+          visited.add(node.val);
+          for (let adjNode of node.adjacent) {
+            if (!visited.has(adj.Node).val)
+              newSet.add(adjNode);
+          }
+        }
       }
-      [{1,2},{2,3}]
-      [1,2,2,3]
-    return nodeVals;
 
+      return this.distanceOfShortestPath(start, end, newSet, count, visited);
 
+    }
 
   }
 }
