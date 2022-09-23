@@ -1,16 +1,37 @@
 /** Check if brackets are balanced with recursion.
  *
  * '[hello[ hi{} ]]'
+ * '[] [] []'
 */
-function balancedBrackets(string, openBrackets=[], closedBrackets=[]) {
+function balancedBrackets(string, unevenBrackets = [], idx = 0) {
 
-  openList = '[{(';
-  closedList = ']})';
-  if (openList.includes(string[0])) openBrackets.push(string[0]);
-  if (closedList.includes(string[0])) closedBrackets.push(string[0]);
+  if (idx === string.length) return unevenBrackets.length === 0;
+  let openBrackets = {
+    '[': ']',
+    '{': '}',
+    '(': ')'
+  };
 
-  balancedBrackets(string.slice(1), openBrackets, closedBrackets)
+  let closedBrackets = {
+    ']': '[',
+    '}': '{',
+    ')': '('
+  };
 
-  if(string.length === 0)
-   return openBrackets.length === 0 & closedBrackets === 0;
+  let char = string[idx];
+  
+  if (openBrackets[char]) {
+    unevenBrackets.push(char);
+  } else if (closedBrackets[char]) {
+    if (unevenBrackets[unevenBrackets.length - 1] === closedBrackets[char]) {
+      unevenBrackets.pop();
+    } else {
+      return false;
+    }
+  }
+
+  return balancedBrackets(string, unevenBrackets, idx + 1);
+
 }
+
+module.exports = { balancedBrackets };
